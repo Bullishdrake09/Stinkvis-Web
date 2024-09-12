@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StinkVis Chat</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>StinkVis</h1>
+        <div class="profile-section">
+            <img src="path-to-default-profile-pic.jpg" alt="Profielfoto" class="profile-pic">
+            <span id="username">Gebruikersnaam</span>
+            <button id="logoutBtn">Uitloggen</button>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <button id="newGroupBtn">Groep aanmaken</button>
+            <button id="addFriendBtn">Vriend toevoegen</button>
+            <h2>Chats</h2>
+            <ul id="chatList">
+                <li>DM met <span class="chat-user">Gebruiker1 (Voorbeeld)</span></li>
+                <li>Groepschat: <span class="chat-user">Team A (Voorbeeld)</span></li>
+            </ul>
+        </aside>
+
+        <main class="chat-area">
+            <!-- Welkom scherm -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <h2>Welkom bij StinkVis</h2>
+            </div>
+
+            <!-- Chat venster -->
+            <section class="chat-window" id="chatWindow" style="display:none;">
+                <h2>Chat met <span id="currentChatUser">Gebruiker1</span></h2>
+                <div class="messages">
+                    <div class="message received">Hallo!</div>
+                    <div class="message sent">Hey, hoe gaat het?</div>
+                </div>
+                <form id="messageForm">
+                    <input type="text" id="messageInput" placeholder="Typ je bericht...">
+                    <button type="submit">Verstuur</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            window.location.href = '/';
+        });
+
+        // Simuleer chatselectie
+        document.getElementById('chatList').addEventListener('click', () => {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('chatWindow').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

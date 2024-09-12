@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vriend toevoegen</title>
+    <link rel="stylesheet" href="friends.css"> <!-- Gelinkt aan friends.css -->
+</head>
+<body>
+    <div class="friend-container">
+        <h1>Vriend toevoegen</h1>
+        <form action="/add-friend" method="post">
+            <input type="text" name="username" placeholder="Gebruikersnaam van vriend" required>
+            <button type="submit">Vriend toevoegen</button>
+        </form>
+        <a href="/app" class="back-link">Terug naar Chat</a>
+    </div>
+</body>
+</html>

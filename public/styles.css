@@ -1,0 +1,220 @@
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Slab', sans-serif;
+    background: linear-gradient(135deg, #2e2e2e, #1a1a1a, #3d3d3d, #2b2b2b);
+    background-size: 400% 400%; /* Vergroot de gradient om meer beweging mogelijk te maken */
+    color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    animation: gradientMove 15s ease infinite; /* Langzamere animatie voor vloeiend effect */
+}
+
+
+header {
+    background-color: #333;
+    color: #e60000;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header button {
+    background-color: #e60000;
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+header button:hover {
+    background-color: #cc0000;
+}
+
+.app-container {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 50px); /* Vul de volledige hoogte minus header */
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #1a1a1a;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-right: 2px solid #333;
+}
+
+.sidebar h2 {
+    color: #e60000;
+    margin-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    background-color: #333;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li:hover {
+    background-color: #e60000;
+}
+
+.sidebar button {
+    background-color: #e60000;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar button:hover {
+    background-color: #cc0000;
+}
+
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-screen {
+    text-align: center;
+}
+
+.chat-window {
+    width: 100%;
+    max-width: 700px;
+}
+
+.chat-window h2 {
+    margin-top: 0;
+    color: #e60000;
+}
+
+.messages {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    padding: 20px;
+    height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+
+@keyframes messageGradientMove {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.received, .sent {
+    border-radius: 10px;
+    background-size: 300% 300%; /* Vergroot de achtergrondgrootte voor een duidelijker bewegend effect */
+    animation: messageGradientMove 15s ease infinite; /* Verhoog de duur voor een vloeiender effect */
+}
+
+.received {
+    background: linear-gradient(135deg, #1a1a1a, #333333, #1a1a1a); /* Donkere kleuren gradient */
+}
+
+.sent {
+    background: linear-gradient(135deg, #3d0d0d, #b30000, #3d0d0d); /* Donkerdere rode kleuren gradient */
+    text-align: right;
+    /* Zorg ervoor dat je hier ook achtergrondgrootte en animatie opneemt */
+    background-size: 300% 300%; /* Zorg ervoor dat de gradient voldoende groot is om te bewegen */
+    animation: messageGradientMove 15s ease infinite; /* Pas de duur en timing aan zoals gewenst */
+}
+
+
+
+
+
+
+
+
+
+
+
+form {
+    display: flex;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #333;
+    background-color: #1a1a1a;
+    color: #fff;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: #e60000;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #cc0000;
+    transform: scale(1.05);
+}

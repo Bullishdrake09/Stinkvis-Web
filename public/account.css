@@ -1,0 +1,46 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #2e2e2e, #1a1a1a); /* Grijze gradiënt */
+    color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+input {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #333;
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+button {
+    padding: 10px;
+    background-color: #e60000;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #2e2e2e, #1a1a1a);
+    color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.friend-container {
+    text-align: center;
+    background-color: #1a1a1a;
+    padding: 40px;
+    border-radius: 10px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+h1 {
+    color: #e60000;
+}
+
+input, button {
+    margin: 10px 0;
+    padding: 10px;
+    width: 80%;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #e60000;
+    transition: transform 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.back-link {
+    display: block;
+    margin-top: 20px;
+    color: #e60000;
+    text-decoration: none;
+}

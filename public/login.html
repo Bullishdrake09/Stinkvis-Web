@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stinkvis - Login</title>
+    <link rel="stylesheet" href="account.css"> <!-- Gelinkt aan account.css -->
+</head>
+<body>
+    <div class="container">
+        <h1>Inloggen</h1>
+        <form action="/login" method="POST">
+            <input type="text" name="username" placeholder="Gebruikersnaam" required>
+            <input type="password" name="password" placeholder="Wachtwoord" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>Nog geen account? <a href="/register">Registreer hier</a>.</p>
+    </div>
+</body>
+</html>
