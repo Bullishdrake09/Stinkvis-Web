@@ -6,18 +6,22 @@ const db = require('./db'); // Verwijzing naar de database
 
 
 const app = express();
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(bodyParser.json()); // Voeg deze regel toe voor het parsen van JSON-data
 
 // Voeg sessiemiddleware toe
 app.use(session({
     secret: 'yefizuehiazjdhaziugdyezgfdsqjieuzaydiygfisqhbazezadsqzda', // Gebruik een sterke geheime sleutel
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false } // Zet op true bij HTTPS
+    cookie: { secure: true } // Zet op true bij HTTPS
 }));
 
 // let users = []; // Simpele gebruikersopslag (later naar een database)
+// let messages = {}; // Een eenvoudig object om berichten per gebruiker op te slaan
+
 
 
 //Terugsturen wanneer niet ingelogd
@@ -140,38 +144,40 @@ app.get('/app', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'app.html'));
 });
 
-let friendRequests = []; // Opslag voor vriendschapsverzoeken
-
 app.post('/add-friend', (req, res) => {
     const { username } = req.body;
     const sender = req.session.username;
+    console.log('Request body:', req.body); // Debugging
 
-    if (!sender) {
-        return res.send('Je moet ingelogd zijn om een vriend toe te voegen.');
+    if (!username || !sender) {
+        return res.send('Je moet ingelogd zijn of een geldige gebruikersnaam opgeven.');
     }
 
     console.log(`Vriendschapsverzoek van: ${sender} naar: ${username}`); // Voeg debugging toe
 
     // Controleer of de ontvanger in de database bestaat
-    db.get(`SELECT * FROM users WHERE LOWER(username) = ?`, [username], (err, user) => {
+    db.get(`SELECT * FROM users WHERE LOWER(username) = ?`, [username.toLowerCase()], (err, user) => {
         if (err) {
-            console.error('Fout bij het zoeken naar gebruiker:', err); // Log fout naar console
+            console.error('Fout bij het zoeken naar gebruiker:', err);
+            alert('Er is een fout opgetreden.')
             return res.send('Er is een fout opgetreden.');
         }
 
         if (!user) {
-            console.log('Gebruiker niet gevonden:', username); // Log gebruikersnaam die niet wordt gevonden
+            console.log('Gebruiker niet gevonden:', username);
+            alert('Gebruiker niet gevonden')
             return res.send('Gebruiker niet gevonden.');
+            
         }
 
-        // Voeg het vriendschapsverzoek toe aan de database
         db.run(`INSERT INTO friend_requests (from_user, to_user, status) VALUES (?, ?, 'pending')`,
             [sender, username], (err) => {
                 if (err) {
-                    console.error('Fout bij het toevoegen van vriendschapsverzoek:', err); // Log fout naar console
+                    console.error('Fout bij het toevoegen van vriendschapsverzoek:', err);
                     return res.send('Er is een fout opgetreden bij het versturen van het vriendschapsverzoek.');
                 }
                 res.send('Vriendschapsverzoek verstuurd.');
+                
             });
     });
 });
@@ -221,10 +227,64 @@ app.post('/accept-friend', (req, res) => {
                 if (err) {
                     return res.send('Er is een fout opgetreden bij het accepteren van het verzoek.');
                 }
-                res.send('Vriendschapsverzoek geaccepteerd.');
+
+                // Voeg de vriendschap toe aan de friends-tabel
+                db.run(`INSERT INTO friends (user1, user2) VALUES (?, ?)`, [from, to], (err) => {
+                    if (err) {
+                        return res.send('Er is een fout opgetreden bij het toevoegen van de vriend.');
+                    }
+                    res.send('Vriendschapsverzoek geaccepteerd.');
+                });
             });
         });
 });
+
+
+app.get('/friends-list', (req, res) => {
+    const username = req.session.username;
+
+    db.all(`SELECT user1 AS friend FROM friends WHERE user2 = ?
+            UNION
+            SELECT user2 AS friend FROM friends WHERE user1 = ?`, 
+            [username, username], (err, friends) => {
+        if (err) {
+            return res.send('Er is een fout opgetreden.');
+        }
+        res.json(friends);
+    });
+});
+
+
+
+app.post('/send-message', (req, res) => {
+    const { recipient, message } = req.body;
+    const sender = req.session.username;
+
+    if (!recipient || !message || !sender) {
+        return res.status(400).json({ error: 'Ongeldige invoer' });
+    }
+
+    db.run(`INSERT INTO messages (sender, recipient, message) VALUES (?, ?, ?)`, [sender, recipient, message], (err) => {
+        if (err) return res.status(500).json({ error: 'Fout bij het opslaan van het bericht.' });
+        res.status(200).json({ success: true });
+    });
+});
+
+app.get('/messages/:friend', (req, res) => {
+    const friend = req.params.friend;
+    const username = req.session.username;
+
+    if (!username || !friend) return res.status(400).json({ error: 'Ongeldige invoer' });
+
+    db.all(`SELECT * FROM messages WHERE (sender = ? AND recipient = ?) OR (sender = ? AND recipient = ?) ORDER BY timestamp`, 
+           [username, friend, friend, username], (err, messages) => {
+        if (err) return res.status(500).json({ error: 'Fout bij het ophalen van berichten.' });
+        res.json(messages);
+    });
+});
+
+
+
 
 // Server starten
 const PORT = process.env.PORT || 3000;

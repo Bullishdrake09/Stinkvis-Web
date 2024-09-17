@@ -22,6 +22,25 @@ db.serialize(() => {
             FOREIGN KEY(to_user) REFERENCES users(username)
         );
     `);
+    db.run(`
+     CREATE TABLE IF NOT EXISTS friends (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       user1 TEXT NOT NULL,
+      user2 TEXT NOT NULL
+      );
+
+    `);
+    db.run(`
+        CREATE TABLE IF NOT EXISTS messages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sender TEXT,
+        recipient TEXT,
+        message TEXT,
+         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+   
+    `);
 });
 
 module.exports = db;

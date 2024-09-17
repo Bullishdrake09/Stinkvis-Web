@@ -218,3 +218,14 @@ button:hover {
     background-color: #cc0000;
     transform: scale(1.05);
 }
+.chat-user {
+    font-weight: bold;
+    color: #f0f0f0;
+    transition: color 0.3s;
+}
+#currentChatUser {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e60000;
+    margin-bottom: 10px;
+}

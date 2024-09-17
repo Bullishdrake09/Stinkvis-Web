@@ -7,44 +7,48 @@
     <link rel="stylesheet" href="friends.css">
 </head>
 <body>
-    <h1>Vrienden Toevoegen</h1>
-    <form id="friendForm">
-        <input type="text" id="friendUsername" placeholder="Gebruikersnaam" required>
-        <button type="submit">Voeg vriend toe</button>
-    </form>
-
-    <h2>Verzonden Verzoeken</h2>
-    <ul id="sentRequests">
-        <!-- Verzonden verzoeken -->
-    </ul>
-
-    <h2>Ontvangen Verzoeken</h2>
-    <ul id="receivedRequests">
-        <!-- Ontvangen verzoeken -->
-    </ul>
+    <div class="friend-container">
+        <h1>Vrienden Toevoegen</h1>
+        <form id="friendForm">
+            <a href="/app" class="button">Go back to app</a>
+            <input type="text" id="friendUsername" placeholder="Gebruikersnaam" required>
+            <button type="submit">Voeg vriend toe</button>
+        </form>
+    
+        <h2>Verzonden Verzoeken</h2>
+        <ul id="sentRequests">
+            <!-- Verzonden verzoeken -->
+        </ul>
+    
+        <h2>Ontvangen Verzoeken</h2>
+        <ul id="receivedRequests">
+            <!-- Ontvangen verzoeken -->
+        </ul>
+    </div>
 
     <script>
-        // Functie om een vriend toe te voegen
+        // functie om een vriend toe te voegen
         document.getElementById('friendForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('friendUsername').value;
-            console.log("Toegevoegde vriend:", username);
-            const messageElement = document.getElementById('message');
-            // Stuur een POST request naar de server met de gebruikersnaam
-            fetch('/add-friend', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username })
-            }).then(response => response.text()).then(data => {
-                // Toon feedback aan de gebruiker
-                messageElement.textContent = data;
-                messageElement.style.color = 'green'; // Feedback in groene kleur bij succes
-                loadSentRequests(); // Refresh the sent requests list
-            }).catch(error => {
-                messageElement.textContent = 'Er is een fout opgetreden bij het versturen van het vriendschapsverzoek.';
-                messageElement.style.color = 'red'; // Error message in red
-            });
-        });
+    e.preventDefault();
+    const username = document.getElementById('friendUsername').value;
+    console.log("Toegevoegde vriend:", username); // Debugging
+    
+    if (!username) {
+        alert("Voer een geldige gebruikersnaam in");
+        return;
+    }
+
+    fetch('/add-friend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+    }).then(response => response.text()).then(data => {
+        console.log(data); // Debugging
+    }).catch(error => {
+        console.error('Er is een fout opgetreden:', error);
+    });
+});
+
 
         // Haal verzonden vriendschapsverzoeken op
         function loadSentRequests() {
@@ -95,13 +99,33 @@
               });
         }
     
-        // Laad de vriendschapsverzoeken zodra de pagina is geladen
-        window.onload = function () {
-            loadSentRequests();
-            loadReceivedRequests();
+// Haal de vriendenlijst op
+function loadFriendsList() {
+    fetch('/friends-list')
+        .then(response => response.json())
+        .then(friends => {
+            const friendsList = document.createElement('ul');
+            friends.forEach(friend => {
+                const li = document.createElement('li');
+                li.textContent = friend.friend;
+                friendsList.appendChild(li);
+            });
+            document.body.appendChild(friendsList); // Plaats de lijst ergens in je HTML
+        })
+        .catch(error => {
+            console.error('Fout bij het ophalen van de vriendenlijst:', error);
+        });
+}
+
+    // Laad de vriendenlijst zodra de pagina is geladen
+            window.onload = function () {
+                loadSentRequests();
+                loadReceivedRequests();
+                loadFriendsList(); // Laad ook de vriendenlijst
         };
-    </script>
+
+
     
+    </script>
 </body>
 </html>
-

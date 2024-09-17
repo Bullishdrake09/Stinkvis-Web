@@ -24,8 +24,7 @@
             <button id="addFriendBtn">Vriend toevoegen</button>
             <h2>Chats</h2>
             <ul id="chatList">
-                <li>DM met <span class="chat-user">Gebruiker1 (Voorbeeld)</span></li>
-                <li>Groepschat: <span class="chat-user">Team A (Voorbeeld)</span></li>
+                <li>DM met <span class="chat-user">Er zijn nog geen vrienden toegevoegd dus werd dit voorbeeld ingeladen</span></li>
             </ul>
         </aside>
 
@@ -44,6 +43,7 @@
                 </div>
                 <form id="messageForm">
                     <input type="text" id="messageInput" placeholder="Typ je bericht...">
+                    <input type="file" id="imageInput" accept="image/*">
                     <button type="submit">Verstuur</button>
                 </form>
             </section>
@@ -51,6 +51,70 @@
     </div>
 
     <script>
+
+
+
+
+document.getElementById('addFriendBtn').addEventListener('click', () => {
+    window.location.href = '/friends'; // Verwijst naar friends.html
+});
+
+        // Event listener voor het bericht versturen
+document.getElementById('messageForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Voorkom dat het formulier de pagina herlaadt
+
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput.value.trim();
+
+    if (message === '') return; // Verstuur geen lege berichten
+
+    // Stuur het bericht naar de server
+    fetch('/send-message', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            recipient: document.getElementById('currentChatUser').textContent, // De huidige gebruiker waarmee je chat
+            message: message
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Bericht kon niet worden verzonden');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Voeg het verzonden bericht toe aan de chatvenster
+        addMessageToChat('sent', message);
+
+        // Wis het invoerveld
+        messageInput.value = '';
+    })
+    .catch(error => {
+        console.error('Fout bij het versturen van het bericht:', error);
+    });
+});
+
+// Functie om een bericht toe te voegen aan het chatvenster
+function addMessageToChat(type, message) {
+    const messagesContainer = document.querySelector('.messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message', type);
+    messageDiv.textContent = message;
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll naar de onderkant
+}
+
+
+
+
+
+
+
+
+
         document.addEventListener('DOMContentLoaded', () => {
             fetch('/get-session-username')
     .then(response => {
@@ -79,6 +143,75 @@
             document.getElementById('welcomeScreen').style.display = 'none';
             document.getElementById('chatWindow').style.display = 'block';
         });
+
+
+
+
+        // Functie om vrienden op te halen en in de chatlijst te tonen
+function loadFriends() {
+    fetch('/friends-list')
+        .then(response => response.json())
+        .then(friends => {
+            const chatList = document.getElementById('chatList');
+            chatList.innerHTML = ''; // Wis de bestaande lijst
+
+            friends.forEach(friend => {
+                const li = document.createElement('li');
+                li.innerHTML = `DM met <span class="chat-user">${friend.friend}</span>`;
+                li.addEventListener('click', () => {
+                    openChat(friend.friend);
+                });
+                chatList.appendChild(li);
+            });
+        })
+        .catch(error => {
+            console.error('Fout bij het ophalen van de vriendenlijst:', error);
+        });
+}
+
+// Functie om de chat met een vriend te openen
+function openChat(friendUsername) {
+    document.getElementById('welcomeScreen').style.display = 'none';
+    document.getElementById('chatWindow').style.display = 'block';
+    document.getElementById('currentChatUser').textContent = friendUsername;
+    // Hier kun je nog code toevoegen om berichten van deze vriend op te halen
+ // Haal de berichten op van de server
+ fetch(`/messages/${friendUsername}`)
+        .then(response => response.json())
+        .then(messages => {
+            const messagesContainer = document.querySelector('.messages');
+            messagesContainer.innerHTML = ''; // Maak de berichtencontainer leeg
+
+            // Voeg elk bericht toe aan de chat
+            messages.forEach(msg => {
+                const messageType = msg.sender === document.getElementById('username').textContent ? 'sent' : 'received';
+                addMessageToChat(messageType, msg.message);
+            });
+        })
+        .catch(error => {
+            console.error('Fout bij het ophalen van berichten:', error);
+        });
+
+}
+
+// Laad de vriendenlijst wanneer de pagina wordt geladen
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/get-session-username')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Niet ingelogd');
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('username').textContent = data.username;
+            loadFriends(); // Vriendenlijst ophalen en tonen
+        })
+        .catch(error => {
+            console.error('Fout:', error);
+            window.location.href = '/login'; // Terug naar login als er geen sessie is
+        });
+});
     </script>
 </body>
 </html>
