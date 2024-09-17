@@ -3,18 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vriend toevoegen</title>
-    <link rel="stylesheet" href="friends.css"> <!-- Gelinkt aan friends.css -->
-    <link rel="icon" href="logo.ico" type="image/x-icon">
+    <title>Vrienden Toevoegen</title>
+    <link rel="stylesheet" href="friends.css">
 </head>
 <body>
-    <div class="friend-container">
-        <h1>Vriend toevoegen</h1>
-        <form action="/add-friend" method="post">
-            <input type="text" name="username" placeholder="Gebruikersnaam van vriend" required>
-            <button type="submit">Vriend toevoegen</button>
-        </form>
-        <a href="/app" class="back-link">Terug naar Chat</a>
-    </div>
+    <h1>Vrienden Toevoegen</h1>
+    <form id="friendForm">
+        <input type="text" id="friendUsername" placeholder="Gebruikersnaam" required>
+        <button type="submit">Voeg vriend toe</button>
+    </form>
+
+    <h2>Verzonden Verzoeken</h2>
+    <ul id="sentRequests">
+        <!-- Verzonden verzoeken -->
+    </ul>
+
+    <h2>Ontvangen Verzoeken</h2>
+    <ul id="receivedRequests">
+        <!-- Ontvangen verzoeken -->
+    </ul>
+
+    <script>
+        // Functie om een vriend toe te voegen
+        document.getElementById('friendForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('friendUsername').value;
+            console.log("Toegevoegde vriend:", username);
+            const messageElement = document.getElementById('message');
+            // Stuur een POST request naar de server met de gebruikersnaam
+            fetch('/add-friend', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username })
+            }).then(response => response.text()).then(data => {
+                // Toon feedback aan de gebruiker
+                messageElement.textContent = data;
+                messageElement.style.color = 'green'; // Feedback in groene kleur bij succes
+                loadSentRequests(); // Refresh the sent requests list
+            }).catch(error => {
+                messageElement.textContent = 'Er is een fout opgetreden bij het versturen van het vriendschapsverzoek.';
+                messageElement.style.color = 'red'; // Error message in red
+            });
+        });
+
+        // Haal verzonden vriendschapsverzoeken op
+        function loadSentRequests() {
+            fetch('/sent-requests')
+                .then(response => response.json())
+                .then(requests => {
+                    const sentRequestsList = document.getElementById('sentRequests');
+                    sentRequestsList.innerHTML = ''; // Maak de lijst eerst leeg
+                    requests.forEach(request => {
+                        const li = document.createElement('li');
+                        li.textContent = request.to_user;
+                        sentRequestsList.appendChild(li);
+                    });
+                });
+        }
+    
+        // Haal ontvangen vriendschapsverzoeken op
+        function loadReceivedRequests() {
+            fetch('/received-requests')
+                .then(response => response.json())
+                .then(requests => {
+                    const receivedRequestsList = document.getElementById('receivedRequests');
+                    receivedRequestsList.innerHTML = ''; // Maak de lijst eerst leeg
+                    requests.forEach(request => {
+                        const li = document.createElement('li');
+                        li.textContent = request.from_user;
+                        const acceptButton = document.createElement('button');
+                        acceptButton.textContent = 'Accepteer';
+                        acceptButton.onclick = function () {
+                            acceptFriendRequest(request.from_user);
+                        };
+                        li.appendChild(acceptButton);
+                        receivedRequestsList.appendChild(li);
+                    });
+                });
+        }
+    
+        // Accepteer een vriendschapsverzoek
+        function acceptFriendRequest(fromUser) {
+            fetch('/accept-friend', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ from: fromUser })
+            }).then(response => response.text())
+              .then(data => {
+                  alert(data);
+                  loadReceivedRequests(); // Verzoeken opnieuw laden na acceptatie
+              });
+        }
+    
+        // Laad de vriendschapsverzoeken zodra de pagina is geladen
+        window.onload = function () {
+            loadSentRequests();
+            loadReceivedRequests();
+        };
+    </script>
+    
 </body>
 </html>
+

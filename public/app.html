@@ -51,8 +51,27 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/get-session-username')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Niet ingelogd');
+        }
+        return response.json();
+    })
+    .then(data => {
+        document.getElementById('username').textContent = data.username;
+    })
+    .catch(error => {
+        console.error('Fout:', error);
+        window.location.href = '/login'; // Terug naar login als er geen sessie is
+    });
+});
+
+
+
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            window.location.href = '/';
+            window.location.href = '/logout';
         });
 
         // Simuleer chatselectie
