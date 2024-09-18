@@ -16,7 +16,7 @@ app.use(session({
     secret: 'yefizuehiazjdhaziugdyezgfdsqjieuzaydiygfisqhbazezadsqzda', // Gebruik een sterke geheime sleutel
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true } // Zet op true bij HTTPS
+    cookie: { secure: false } // Zet op true bij HTTPS
 }));
 
 // let users = []; // Simpele gebruikersopslag (later naar een database)
