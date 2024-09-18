@@ -1,0 +1,317 @@
+/* Background Gradient with Texture Effect */
+@keyframes adminGradientMove {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Slab', sans-serif;
+    background: linear-gradient(135deg, #1d1d1d, #131313, #292929, #1b1b1b);
+    background-size: 600% 600%; /* Larger background for more texture movement */
+    color: #f5f5f5;
+    height: 100vh;
+    animation: adminGradientMove 10s ease infinite, textureEffect 2s infinite alternate; /* Background moves and pulses */
+}
+
+/* Background texture animation */
+@keyframes textureEffect {
+    0% {
+        background-blend-mode: normal;
+    }
+    100% {
+        background-blend-mode: overlay;
+        filter: contrast(1.2);
+    }
+}
+
+/* Enhanced Header with Animations */
+header {
+    background-color: #303030;
+    color: #ff4081;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: slideIn 1s ease forwards; /* Sliding in the header from the top */
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+    letter-spacing: 2px;
+    animation: glow 1.5s infinite alternate; /* Glowing effect for text */
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 10px #ff4081, 0 0 20px #ff4081, 0 0 30px #ff4081;
+    }
+    100% {
+        text-shadow: 0 0 20px #ff80ab, 0 0 40px #ff80ab, 0 0 60px #ff80ab;
+    }
+}
+
+header button {
+    background-color: #ff4081;
+    border: none;
+    color: white;
+    padding: 12px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    border-radius: 5px;
+    animation: bounce 2s infinite; /* Bounce effect on button */
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+header button:hover {
+    background-color: #d81b60;
+    transform: scale(1.1); /* Enlarged hover effect */
+}
+
+/* Login Form with Texture and Animations */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15vh;
+    padding: 40px;
+    background-color: rgba(50, 50, 50, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    width: 350px;
+    margin: auto;
+    animation: formGlow 2s infinite alternate; /* Glowing effect around form */
+}
+
+@keyframes formGlow {
+    0% {
+        box-shadow: 0 0 20px #ff4081, 0 0 30px #ff80ab;
+    }
+    100% {
+        box-shadow: 0 0 30px #ff80ab, 0 0 40px #ff4081;
+    }
+}
+
+form input {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 2px solid #333;
+    background-color: #222;
+    color: white;
+    width: 100%;
+    font-size: 1em;
+    transition: border-color 0.3s, transform 0.5s ease-in-out;
+    animation: inputPulse 3s ease-in-out infinite; /* Pulsing effect on inputs */
+}
+
+@keyframes inputPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+form input:focus {
+    border-color: #ff4081;
+}
+
+form button {
+    padding: 12px 25px;
+    background-color: #ff4081;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1em;
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s, background-color 0.5s ease;
+}
+
+form button:hover {
+    background-color: #d81b60;
+    transform: scale(1.1);
+}
+
+/* Admin Content with Textures and Dynamic Effects */
+#adminContent {
+    display: none;
+    padding: 30px;
+    background-color: #282828;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    margin: 20px auto;
+    animation: fadeIn 1s ease-in-out; /* Fade in when displayed */
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#adminContent h1 {
+    color: #ff4081;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2em;
+    letter-spacing: 2px;
+    animation: textZoom 2s infinite alternate; /* Zoom effect on heading */
+}
+
+@keyframes textZoom {
+    0% {
+        letter-spacing: 2px;
+    }
+    100% {
+        letter-spacing: 5px;
+    }
+}
+
+/* Animated Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #333;
+    border-radius: 8px;
+    overflow: hidden;
+    animation: tableZoom 1.5s ease; /* Zoom in table */
+}
+
+@keyframes tableZoom {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+table th, table td {
+    padding: 20px;
+    text-align: left;
+    border-bottom: 2px solid #444;
+    font-size: 1.1em;
+}
+
+table th {
+    background-color: #444;
+    color: #ff4081;
+    text-transform: uppercase;
+    animation: thSlideIn 0.8s ease-out; /* Slide in headers */
+}
+
+@keyframes thSlideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+table td {
+    color: #e0e0e0;
+    animation: tdFadeIn 0.8s ease-in forwards; /* Fade in cells */
+}
+
+@keyframes tdFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+table tr:hover {
+    background-color: #ff4081;
+    color: white;
+    animation: rowHoverEffect 0.5s ease forwards; /* Row hover effect */
+}
+
+@keyframes rowHoverEffect {
+    0% {
+        background-color: #333;
+    }
+    100% {
+        background-color: #ff4081;
+    }
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #ff4081;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #d81b60;
+    transform: scale(1.1);
+}
+
+/* Enhanced Animation for Buttons in Table */
+table td button {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    animation: buttonPulse 1.5s infinite; /* Pulsing buttons */
+}
+
+@keyframes buttonPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+table td button:hover {
+    background-color: #c51162;
+}

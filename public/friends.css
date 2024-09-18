@@ -2,92 +2,154 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #2e2e2e, #1a1a1a);
-    color: #f0f0f0;
+    font-family: 'Poppins', sans-serif; /* Sleek, modern font */
+    background: linear-gradient(135deg, #262626, #111111); /* Darker gradient for depth */
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    color: #f5f5f5;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden; /* Hide overflow from animated elements */
+    position: relative;
 }
 
-/* Styling for the main container */
+/* Subtle animated gradient background */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Floating particle effect with enhanced styling */
+body::before {
+    content: "";
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle at 50%, rgba(255, 0, 0, 0.2), transparent);
+    top: -100%;
+    left: -100%;
+    animation: particleFloat 18s infinite alternate ease-in-out;
+    z-index: -1;
+}
+
+@keyframes particleFloat {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(40px, 40px); }
+}
+
+/* Enhanced container with glassmorphism */
 .friend-container {
-    background-color: #333;
-    padding: 40px;
-    border-radius: 10px;
-    width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background: rgba(55, 55, 55, 0.85);
+    padding: 60px;
+    border-radius: 25px;
+    width: 450px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
     text-align: center;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    backdrop-filter: blur(15px); /* Glass effect */
 }
 
-/* Heading styling */
+.friend-container:hover {
+    transform: scale(1.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
+}
+
+/* Enhanced Heading styling */
 h1 {
-    color: #e60000;
-    margin-bottom: 20px;
+    color: #ff4444;
+    margin-bottom: 30px;
+    text-shadow: 5px 5px 25px rgba(255, 68, 68, 0.9);
+    animation: textGlow 2.5s infinite alternate ease-in-out;
+    letter-spacing: 1.5px;
+    text-transform: uppercase; /* Uppercase text for impact */
 }
 
-/* Form styling */
+@keyframes textGlow {
+    0% { text-shadow: 5px 5px 15px rgba(230, 0, 0, 0.6); }
+    100% { text-shadow: 5px 5px 35px rgba(255, 68, 68, 1); }
+}
+
+/* Enhanced form styling */
 form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 18px;
 }
 
 input[type="text"] {
-    padding: 10px;
-    border: 2px solid #e60000;
-    background-color: #444;
-    color: #f0f0f0;
-    border-radius: 5px;
+    padding: 16px;
+    border: 3px solid #ff4444;
+    background-color: #3d3d3d;
+    color: #fafafa;
+    border-radius: 12px;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
 input[type="text"]:focus {
-    border-color: #ff3333;
+    border-color: #ff6b6b;
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.7);
+    transform: scale(1.05);
 }
 
+/* Elevated button styles with smooth animation */
 button {
-    padding: 10px;
-    background-color: #e60000;
-    color: #fff;
+    padding: 16px;
+    background-color: #ff4444;
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 1.2em;
+    transition: background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 button:hover {
-    background-color: #ff3333;
-    transform: scale(1.05);
+    background-color: #ff6b6b;
+    transform: scale(1.15) rotate(2deg);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6);
 }
 
-.button {
-    padding: 10px;
-    background-color: #e60000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+/* Accept button with enhanced styling */
+button.accept {
+    background-color: #4caf50;
 }
 
-.button:hover {
-    background-color: #ff3333;
-    transform: scale(1.05);
+button.accept:hover {
+    background-color: #58d068;
 }
 
+/* Go back to app link styling */
+a.go-back {
+    display: inline-block;
+    padding: 14px 24px;
+    margin-top: 20px;
+    background-color: #ff4444;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+a.go-back:hover {
+    background-color: #ff6b6b;
+    transform: scale(1.1) rotate(-1deg);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
 
-/* Heading for sections */
+/* Enhanced section headings */
 h2 {
-    color: #e60000;
-    margin-top: 30px;
-    margin-bottom: 10px;
+    color: #ff4444;
+    margin-top: 35px;
+    margin-bottom: 20px;
+    text-shadow: 4px 4px 15px rgba(255, 68, 68, 0.8);
+    animation: textGlow 2s infinite alternate ease-in-out;
 }
 
-/* List styling */
+/* Enhanced list styling */
 ul {
     list-style-type: none;
     padding: 0;
@@ -95,30 +157,102 @@ ul {
 }
 
 ul li {
-    padding: 10px;
-    background-color: #850707;
-    margin-bottom: 5px;
+    padding: 25px;
+    background-color: #3a3a3a;
+    margin-bottom: 15px;
+    border-radius: 14px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.4s ease, transform 0.4s ease;
 }
 
+ul li:hover {
+    background-color: #4a4a4a;
+    transform: scale(1.1);
+}
+
+/* Friend list items */
 li {
     background-color: #444;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    padding: 22px;
+    margin-bottom: 20px;
+    border-radius: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: transform 0.4s ease;
 }
 
-button {
-    padding: 5px 10px;
+li:hover {
+    transform: scale(1.08);
 }
 
-/* Button for accepting friend requests */
-button.accept {
-    background-color: #4caf50;
+/* Buttons within list items */
+li button {
+    padding: 12px 20px;
+    border-radius: 10px;
+    transition: transform 0.3s, background-color 0.3s ease;
 }
 
-button.accept:hover {
-    background-color: #45a049;
+li button:hover {
+    transform: scale(1.12);
+}
+
+/* Final enhancement: Floating icons effect */
+li::before {
+    content: "\f007"; /* Font Awesome user icon */
+    font-family: "Font Awesome 5 Free"; /* If using Font Awesome */
+    font-weight: 900;
+    color: #ff4444;
+    font-size: 1.5em;
+    margin-right: 10px;
+    opacity: 0.7;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+li:hover::before {
+    transform: scale(1.2);
+    opacity: 1;
+}
+a {
+    color: #ff4444; /* Match red theme */
+    text-decoration: none;
+    font-weight: 600; /* Make links bold and clear */
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: relative;
+    padding-bottom: 3px;
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #ff4444;
+    left: 0;
+    bottom: 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s ease;
+}
+
+a:hover {
+    color: #ff6b6b; /* Lighter red on hover */
+    transform: scale(1.05); /* Slight scale for interaction */
+}
+
+a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left; /* Slide in underline animation */
+}
+
+a:focus {
+    color: #ff6b6b;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 107, 107, 0.8);
+    transform: scale(1.08); /* Slightly more scaling on focus */
+}
+
+a:active {
+    color: #ff1a1a;
+    transform: scale(1.02); /* Smaller scale on click for feedback */
 }

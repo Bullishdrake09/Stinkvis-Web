@@ -1,231 +1,304 @@
-@keyframes gradientMove {
+/* Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+
+/* Background Animation */
+@keyframes backgroundMove {
     0% {
         background-position: 0% 0%;
     }
-    50% {
-        background-position: 100% 100%;
-    }
     100% {
-        background-position: 0% 0%;
+        background-position: 100% 100%;
     }
 }
 
 body {
     margin: 0;
-    padding: 0;
-    font-family: 'Roboto Slab', sans-serif;
-    background: linear-gradient(135deg, #2e2e2e, #1a1a1a, #3d3d3d, #2b2b2b);
-    background-size: 400% 400%; /* Vergroot de gradient om meer beweging mogelijk te maken */
-    color: #f0f0f0;
-    display: flex;
-    flex-direction: column;
+    font-family: 'Roboto Slab', serif;
+    background: linear-gradient(135deg, #101010, #1a1a1a, #222222);
+    background-size: 200% 200%;
+    animation: backgroundMove 12s linear infinite;
+    color: #e0e0e0;
     height: 100vh;
-    animation: gradientMove 15s ease infinite; /* Langzamere animatie voor vloeiend effect */
+    overflow-x: hidden; /* Hide horizontal overflow */
+    overflow-y: auto; /* Allow vertical scrolling */
+    transition: background-color 0.5s ease;
 }
 
-
+/* Header Styles */
 header {
-    background-color: #333;
-    color: #e60000;
-    padding: 10px;
+    background-color: rgba(30, 30, 30, 0.95);
+    padding: 15px 25px;
     text-align: center;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    animation: slideInHeader 1.5s ease forwards;
+}
+
+@keyframes slideInHeader {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }
 
 header h1 {
-    margin: 0;
+    font-size: 2.2em;
+    color: #ff003c; /* Deep bold red */
+    text-shadow: 0 0 15px rgba(255, 0, 60, 0.6);
+    animation: glowingText 2s infinite alternate;
 }
 
-header button {
-    background-color: #e60000;
-    border: none;
-    color: white;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+@keyframes glowingText {
+    0% {
+        text-shadow: 0 0 10px #ff003c;
+    }
+    100% {
+        text-shadow: 0 0 20px #ff465e;
+    }
 }
 
-header button:hover {
-    background-color: #cc0000;
-}
-
-.app-container {
+.profile-section {
     display: flex;
-    flex: 1;
-    height: calc(100vh - 50px); /* Vul de volledige hoogte minus header */
-}
-
-.sidebar {
-    width: 250px;
-    background-color: #1a1a1a;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    border-right: 2px solid #333;
-}
-
-.sidebar h2 {
-    color: #e60000;
-    margin-bottom: 10px;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-}
-
-.sidebar ul li {
-    padding: 10px;
-    background-color: #333;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.sidebar ul li:hover {
-    background-color: #e60000;
-}
-
-.sidebar button {
-    background-color: #e60000;
-    border: none;
-    color: white;
-    padding: 10px;
-    margin-bottom: 20px;
-    width: 100%;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.sidebar button:hover {
-    background-color: #cc0000;
-}
-
-.chat-area {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    justify-content: center;
     align-items: center;
 }
 
-.welcome-screen {
-    text-align: center;
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid #ff003c;
+    animation: profilePicBounce 2s infinite alternate;
 }
 
-.chat-window {
+@keyframes profilePicBounce {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-5px);
+    }
+}
+
+#logoutBtn {
+    background-color: #ff003c;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+#logoutBtn:hover {
+    background-color: #d40036;
+    transform: scale(1.1);
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #1a1a1a;
+    padding: 20px;
+    height: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    animation: fadeInSidebar 2s ease forwards;
+    overflow-y: auto; /* Allow scrolling */
+}
+
+@keyframes fadeInSidebar {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.sidebar button {
     width: 100%;
-    max-width: 700px;
+    padding: 12px 0;
+    margin-bottom: 15px;
+    background-color: #ff003c;
+    border: none;
+    color: white;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
+.sidebar button:hover {
+    background-color: #d40036;
+    transform: scale(1.05);
+}
+
+#chatList {
+    list-style: none;
+    padding: 0;
+}
+
+#chatList li {
+    background-color: #2b2b2b;
+    color: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+#chatList li:hover {
+    background-color: #ff003c;
+    transform: scale(1.05);
+}
+
+/* Chat Area */
+.chat-area {
+    background-color: rgba(25, 25, 25, 0.95);
+    padding: 20px;
+    flex-grow: 1;
+    animation: fadeInChatArea 2s ease;
+    border-radius: 10px;
+    margin-left: 10px;
+    overflow-y: auto; /* Allow scrolling in chat area */
+}
+
+@keyframes fadeInChatArea {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.welcome-screen h2 {
+    text-align: center;
+    font-size: 2.2em;
+    color: #ff003c;
+    text-shadow: 0 0 10px #ff003c;
+    animation: welcomeTextGlow 2s infinite alternate;
+}
+
+@keyframes welcomeTextGlow {
+    0% {
+        text-shadow: 0 0 10px #ff003c;
+    }
+    100% {
+        text-shadow: 0 0 20px #ff465e;
+    }
+}
+
+/* Chat Window */
 .chat-window h2 {
-    margin-top: 0;
-    color: #e60000;
+    font-size: 1.8em;
+    color: #ff003c;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #ff003c;
 }
 
 .messages {
-    background-color: #1a1a1a;
-    border: 1px solid #333;
-    padding: 20px;
+    background-color: #1f1f1f;
+    padding: 15px;
+    border-radius: 8px;
     height: 300px;
     overflow-y: auto;
-    margin-bottom: 20px;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.7);
+    scrollbar-width: thin;
+}
+
+.messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background-color: #ff003c;
+    border-radius: 5px;
 }
 
 .message {
     padding: 10px;
-    margin-bottom: 10px;
-}
-
-
-
-
-
-
-
-
-
-@keyframes messageGradientMove {
-    0% {
-        background-position: 0% 0%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
-}
-
-.received, .sent {
-    border-radius: 10px;
-    background-size: 300% 300%; /* Vergroot de achtergrondgrootte voor een duidelijker bewegend effect */
-    animation: messageGradientMove 15s ease infinite; /* Verhoog de duur voor een vloeiender effect */
-}
-
-.received {
-    background: linear-gradient(135deg, #1a1a1a, #333333, #1a1a1a); /* Donkere kleuren gradient */
-}
-
-.sent {
-    background: linear-gradient(135deg, #3d0d0d, #b30000, #3d0d0d); /* Donkerdere rode kleuren gradient */
-    text-align: right;
-    /* Zorg ervoor dat je hier ook achtergrondgrootte en animatie opneemt */
-    background-size: 300% 300%; /* Zorg ervoor dat de gradient voldoende groot is om te bewegen */
-    animation: messageGradientMove 15s ease infinite; /* Pas de duur en timing aan zoals gewenst */
-}
-
-
-
-
-
-
-
-
-
-
-
-form {
-    display: flex;
-}
-
-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #333;
-    background-color: #1a1a1a;
-    color: #fff;
-    margin-right: 10px;
+    margin: 5px 0;
     border-radius: 5px;
+    max-width: 70%;
 }
 
-button {
+.message.sent {
+    background-color: #ff003c;
+    margin-left: auto;
+    text-align: right;
+    color: white;
+}
+
+.message.received {
+    background-color: #2b2b2b;
+    text-align: left;
+    color: white;
+}
+
+#messageForm {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+#messageInput {
+    flex-grow: 1;
     padding: 10px;
-    background-color: #e60000;
+    font-size: 1em;
+    border: 2px solid #ff003c;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: #222;
+    color: white;
+    transition: border-color 0.3s;
+}
+
+#messageInput:focus {
+    border-color: #ff465e;
+}
+
+#imageInput {
+    padding: 5px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#messageForm button {
+    padding: 10px 20px;
+    background-color: #ff003c;
     border: none;
     color: white;
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
     border-radius: 5px;
 }
 
-button:hover {
-    background-color: #cc0000;
-    transform: scale(1.05);
+#messageForm button:hover {
+    background-color: #d40036;
+    transform: scale(1.1);
 }
-.chat-user {
-    font-weight: bold;
-    color: #f0f0f0;
-    transition: color 0.3s;
+
+.app-container {
+    display: flex;
+    height: calc(100vh - 60px); /* Adjust height considering header */
+    overflow: hidden; /* Hide overflow for the main container */
 }
-#currentChatUser {
-    font-size: 24px;
-    font-weight: bold;
-    color: #e60000;
-    margin-bottom: 10px;
+
+.sidebar, .chat-area {
+    overflow: hidden; /* Prevent horizontal scrolling within the containers */
 }

@@ -1,0 +1,173 @@
+/* General body styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #2e2e2e, #1a1a1a);
+    color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    animation: gradientShift 10s ease-in-out infinite;
+    perspective: 1000px;
+    position: relative;
+}
+
+/* Smooth background gradient transition */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Background animated particles */
+body::before {
+    content: "";
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle at 50%, rgba(255, 0, 0, 0.3), transparent);
+    top: -100%;
+    left: -100%;
+    animation: particleFloat 15s infinite alternate ease-in-out;
+    z-index: -1;
+    filter: blur(100px);
+}
+
+@keyframes particleFloat {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(60px, 60px); }
+}
+
+/* Adding a textured background with a gradient noise effect */
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://www.transparenttextures.com/patterns/noise-pattern-with-subtle-texture.png'), linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
+    opacity: 0.1;
+    z-index: -2;
+    animation: textureFade 18s ease-in-out infinite;
+    mix-blend-mode: overlay;
+}
+
+@keyframes textureFade {
+    0% { opacity: 0.05; }
+    50% { opacity: 0.15; }
+    100% { opacity: 0.05; }
+}
+
+/* Main container with dynamic hover and tilt effects */
+.container {
+    text-align: center;
+    padding: 60px;
+    border-radius: 25px;
+    background: rgba(40, 40, 40, 0.9);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 26, 26, 0.3);
+    backdrop-filter: blur(15px) saturate(150%) brightness(0.8);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    transform: rotateY(0deg) rotateX(0deg);
+    animation: containerFadeIn 2.5s ease-in-out forwards;
+}
+
+.container:hover {
+    transform: rotateY(20deg) rotateX(-10deg) scale(1.05);
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 1), inset 0 0 40px rgba(255, 26, 26, 0.6);
+}
+
+@keyframes containerFadeIn {
+    from { opacity: 0; transform: scale(0.85) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Enhanced glowing title with pulsating shadow and hover float */
+h1 {
+    font-size: 4em;
+    color: #ff4d4d;
+    text-shadow: 6px 6px 50px rgba(255, 26, 26, 0.9), 0 0 100px rgba(255, 100, 100, 0.5);
+    animation: titleGlow 3s ease infinite alternate, floatEffect 6s ease-in-out infinite;
+    transition: transform 0.5s ease;
+}
+
+h1:hover {
+    transform: translateY(-10px);
+}
+
+@keyframes titleGlow {
+    0% { text-shadow: 0 0 50px #ff1a1a, 0 0 80px #ff4d4d; }
+    100% { text-shadow: 0 0 80px #ff4d4d, 0 0 100px #ff6666; }
+}
+
+@keyframes floatEffect {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Subtle pulse and hover effects on paragraphs */
+p {
+    font-size: 1.4em;
+    color: #e0e0e0;
+    text-shadow: 3px 3px 30px rgba(255, 26, 26, 0.6);
+    animation: pulseEffect 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulseEffect {
+    0% { opacity: 0.85; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.08); }
+}
+
+/* Interactive links with underline animation and glowing hover effect */
+a {
+    color: #ff4d4d;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.4s ease, color 0.4s ease, text-shadow 0.4s ease;
+}
+
+a:hover {
+    border-bottom: 2px solid #ff1a1a;
+    color: #ff6666;
+    text-shadow: 0 0 10px rgba(255, 26, 26, 0.8), 0 0 20px rgba(255, 26, 26, 0.6);
+}
+
+/* Floating buttons with glowing effect */
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff1a1a;
+    color: #fff;
+    font-size: 1.3em;
+    cursor: pointer;
+    box-shadow: 0 7px 20px rgba(255, 26, 26, 0.4), inset 0 0 15px rgba(255, 26, 26, 0.7);
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+    animation: buttonFloat 6s ease-in-out infinite alternate;
+}
+
+button:hover {
+    box-shadow: 0 10px 30px rgba(255, 26, 26, 0.9), inset 0 0 30px rgba(255, 100, 100, 0.9);
+    transform: translateY(-10px);
+}
+
+@keyframes buttonFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 3em;
+    }
+    p {
+        font-size: 1.2em;
+    }
+    .container {
+        padding: 40px;
+    }
+}

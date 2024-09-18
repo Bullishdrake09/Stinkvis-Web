@@ -1,46 +1,102 @@
-
+/* Enhanced Body Styles */
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #2e2e2e, #1a1a1a); /* Grijze gradiënt */
+    font-family: 'Poppins', sans-serif; /* A more modern font */
+    background: radial-gradient(circle at top right, #2e2e2e, #1a1a1a 70%, #0d0d0d); /* Textured gradient */
     color: #f0f0f0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
+    animation: backgroundMove 6s infinite alternate ease-in-out; /* Smooth background animation */
 }
 
+/* Smooth background animation */
+@keyframes backgroundMove {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+/* Form Styles */
 form {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 350px;
+    padding: 30px;
     margin: 0 auto;
+    background: rgba(50, 50, 50, 0.8); /* Slightly transparent background */
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
     animation: fadeIn 1.5s ease-in-out;
+    backdrop-filter: blur(8px); /* Frosted glass effect */
 }
 
+/* Input Fields */
 input {
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #333;
-    background-color: #1a1a1a;
-    color: #fff;
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid #444;
+    background-color: #262626;
+    color: #f0f0f0;
+    border-radius: 8px;
+    outline: none;
+    transition: box-shadow 0.3s ease-in-out, transform 0.2s;
 }
 
+input:focus {
+    box-shadow: 0 0 12px rgba(255, 0, 0, 0.7); /* Glowing red border on focus */
+    transform: scale(1.03);
+}
+
+/* Button Styles */
 button {
-    padding: 10px;
-    background-color: #e60000;
+    padding: 12px;
+    margin-top: 20px;
+    background: linear-gradient(45deg, #e60000, #ff1a1a);
     border: none;
+    border-radius: 10px;
     color: white;
     cursor: pointer;
-    transition: transform 0.3s;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s ease-in-out;
 }
 
 button:hover {
-    transform: scale(1.05);
+    transform: scale(1.1) rotate(2deg);
+    box-shadow: 0 10px 25px rgba(230, 0, 0, 0.8);
 }
 
+/* Fade-in animation */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Floating Particles Effect */
+body::before {
+    content: "";
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -25%;
+    left: -25%;
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.2) 0%, transparent 70%);
+    animation: floatingParticles 12s infinite alternate;
+    z-index: -1; /* Send particles behind all content */
+}
+
+@keyframes floatingParticles {
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(-10px) translateX(10px); }
+}
+
+/* Subtle Glow Effect on the Form */
+form:hover {
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.8), inset 0 0 10px rgba(255, 0, 0, 0.5);
 }

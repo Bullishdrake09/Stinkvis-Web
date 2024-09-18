@@ -1,56 +1,194 @@
-
+/* General body styling */
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #2e2e2e, #1a1a1a); /* Grijze gradiënt */
+    font-family: 'Poppins', sans-serif; /* Modern, clean font */
+    background: linear-gradient(135deg, #2e2e2e, #1a1a1a); /* Dark gradient */
     color: #f0f0f0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     overflow: hidden;
+    animation: gradientShift 12s ease infinite;
+    perspective: 800px; /* Adds depth to the page for 3D effects */
 }
 
+/* Subtle animated gradient shift */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Glowing particle background */
+body::before {
+    content: "";
+    position: absolute;
+    width: 180%;
+    height: 180%;
+    background: radial-gradient(circle at 50%, rgba(255, 0, 0, 0.2), transparent);
+    top: -50%;
+    left: -50%;
+    animation: particleFloat 15s ease infinite alternate;
+    z-index: -1; /* Behind all content */
+}
+
+@keyframes particleFloat {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(30px, 30px); }
+}
+
+/* Adding subtle textured noise background for depth */
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://www.transparenttextures.com/patterns/noise-pattern-with-subtle-texture.png');
+    opacity: 0.05; /* Adds subtle texture */
+    z-index: -2;
+}
+
+/* Main container styling */
 .container {
     text-align: center;
     animation: fadeIn 2s ease-in-out;
+    padding: 50px;
+    border-radius: 20px;
+    background: rgba(50, 50, 50, 0.85); /* Semi-transparent background */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px) brightness(0.9); /* Frosted glass effect */
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.1s ease-out; /* Quick transition for smooth movement */
 }
 
+/* Remove the hover effect for 3D transformation, as mouse movement will now control it */
+.container:hover {
+    transform: none;
+}
+
+
+/* Title styling with enhanced glow effect */
 .title {
-    font-size: 3em;
-    color: #e60000;
-    animation: glow 2s infinite alternate;
-}
-
-.options {
-    margin-top: 20px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 15px 30px;
-    margin: 10px;
-    background-color: #333;
-    color: #f0f0f0;
-    text-decoration: none;
-    font-size: 1.2em;
-    border: 2px solid #e60000;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
-}
-
-.btn:hover {
-    background-color: #e60000;
-    color: #fff;
-    transform: scale(1.05);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    font-size: 3.2em;
+    color: #ff1a1a;
+    text-shadow: 3px 3px 30px rgba(255, 26, 26, 0.9);
+    animation: glow 3s infinite alternate ease-in-out, floatTitle 6s infinite ease-in-out;
 }
 
 @keyframes glow {
-    from { text-shadow: 0 0 10px #e60000, 0 0 20px #e60000; }
-    to { text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000; }
+    0% { text-shadow: 0 0 20px #ff1a1a, 0 0 40px #ff1a1a; }
+    100% { text-shadow: 0 0 40px #ff4d4d, 0 0 70px #ff4d4d; }
+}
+
+@keyframes floatTitle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Options section styling */
+.options {
+    margin-top: 30px;
+}
+
+/* Button styling with textures and advanced animations */
+.btn {
+    display: inline-block;
+    padding: 15px 40px;
+    margin: 15px;
+    background-color: #333;
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 1.3em;
+    border: 2px solid #ff1a1a;
+    border-radius: 12px;
+    background-image: linear-gradient(to bottom, #444, #222);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+    position: relative;
+    overflow: hidden; /* Clip child elements on overflow */
+    z-index: 1;
+}
+
+.btn:hover {
+    background-color: #ff1a1a;
+    color: white;
+    transform: scale(1.15) rotate(-1deg);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.9);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: top 0.5s ease;
+    z-index: 0;
+}
+
+.btn:hover::before {
+    top: 100%;
+}
+
+.btn:active {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.7);
+}
+
+/* Enhanced list styling */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+ul li {
+    padding: 20px;
+    background-color: #3a3a3a;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 500px;
+    text-align: left;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+ul li:hover {
+    background-color: #4a4a4a;
+    transform: scale(1.05);
+}
+
+/* Fade in animation for container */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Button section glow effect */
+.btn-glow {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    padding: 10px;
+    color: #ff1a1a;
+    text-shadow: 0 0 5px rgba(255, 26, 26, 0.7);
+    animation: pulse 1.5s infinite alternate;
+    cursor: pointer;
+}
+
+@keyframes pulse {
+    0% { text-shadow: 0 0 10px rgba(255, 26, 26, 0.8), 0 0 20px rgba(255, 26, 26, 0.8); }
+    100% { text-shadow: 0 0 30px rgba(255, 26, 26, 1), 0 0 50px rgba(255, 26, 26, 1); }
 }
