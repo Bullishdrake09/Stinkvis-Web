@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beheerder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login form voor admin toegang -->
+    <form id="adminLoginForm">
+        <input type="password" id="adminPassword" placeholder="Voer admin wachtwoord in" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <!-- Beheerder inhoud die alleen zichtbaar is na login -->
+    <div id="adminContent" style="display:none;">
+        <h1>Beheer Gebruikers</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Gebruikersnaam</th>
+                    <th>Email</th>
+                    <th>Actie</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+                <!-- Gebruikers worden hier geladen -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Verberg de admin content totdat ingelogd
+        document.getElementById('adminContent').style.display = 'none';
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+
+            fetch('/admin-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('adminLoginForm').style.display = 'none'; // Verberg het loginformulier
+                    document.getElementById('adminContent').style.display = 'block'; // Toon de beheerderinhoud
+                    loadAdminContent(); // Laad de admin data
+                } else {
+                    alert('Onjuist wachtwoord');
+                }
+            })
+            .catch(error => {
+                console.error('Fout bij admin login:', error);
+            });
+        });
+
+        // Functie om de admin content (gebruikers) te laden
+        function loadAdminContent() {
+            fetch('/admin-users')
+                .then(response => response.json())
+                .then(users => {
+                    const userTable = document.getElementById('userTableBody');
+                    userTable.innerHTML = ''; // Wis huidige inhoud
+
+                    users.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td>
+                                <button onclick="deleteUser(${user.id})">Verwijder</button>
+                            </td>
+                        `;
+                        userTable.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Fout bij het ophalen van gebruikers:', error);
+                });
+        }
+
+        // Functie om een gebruiker te verwijderen
+        function deleteUser(userId) {
+            if (confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?')) {
+                fetch(`/delete-user/${userId}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.reload(); // Herlaad de pagina om de lijst te verversen
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Fout bij het verwijderen van gebruiker:', error);
+                    });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -182,6 +182,74 @@ app.post('/add-friend', (req, res) => {
     });
 });
 
+//admin database beheer
+// Middleware om alleen Bullishdrake09 toegang te geven
+function isAdmin(req, res, next) {
+    if (req.session.username === 'Bullishdrake09') {
+        return next();
+    } else {
+        res.status(403).send('Toegang geweigerd');
+    }
+}
+
+// Route voor de beheerpagina
+app.get('/admin', isAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
+// Route om alle gebruikers op te halen
+app.get('/admin/get-users', isAdmin, (req, res) => {
+    db.all(`SELECT username, email FROM users`, (err, users) => {
+        if (err) {
+            return res.status(500).json({ error: 'Er is een fout opgetreden.' });
+        }
+        res.json(users);
+    });
+});
+
+// Route om een gebruiker te verwijderen
+app.post('/admin/delete-user', isAdmin, (req, res) => {
+    const { username } = req.body;
+
+    db.run(`DELETE FROM users WHERE username = ?`, [username], (err) => {
+        if (err) {
+            return res.status(500).json({ error: 'Er is een fout opgetreden.' });
+        }
+        res.json({ success: true });
+    });
+});
+app.get('/admin-users', (req, res) => {
+    db.all(`SELECT id, username, email FROM users`, [], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows); // Stuur de lijst met gebruikers als JSON terug
+    });
+});
+
+const adminPassword = 'Admin';
+app.post('/admin-login', (req, res) => {
+    const { password } = req.body;
+    if (password === adminPassword) {
+        req.session.isAdmin = true; // Zet admin sessie
+        return res.status(200).json({ success: true });
+    } else {
+        return res.status(403).json({ error: 'Onjuist wachtwoord' });
+    }
+});
+
+// Voeg beveiliging toe aan de admin route
+app.get('/admin', (req, res) => {
+    if (req.session.isAdmin) {
+        res.sendFile(__dirname + '/admin.html');
+    } else {
+        res.redirect('/login'); // Redirect naar login als ze niet zijn ingelogd
+    }
+});
+
+
+
+
 
 
 // Route om ontvangen verzoeken op te halen
